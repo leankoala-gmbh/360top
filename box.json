@@ -1,5 +1,5 @@
 {
-  "main": "bin/top.php",
+  "main": "bin/360top.php",
   "blacklist": [
     "docs",
     ".gitignore",
