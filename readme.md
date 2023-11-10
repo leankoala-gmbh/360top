@@ -28,7 +28,14 @@ sudo mv 360top.phar /usr/local/bin/360top
 
 ## Change Log
 
-- develop
+- **develop**
+
+
+- **Version 1.0**
+  - Show historic data for memory, cpu, disc space and notifications
+  - Show custom metrics
+  - Initialization script
+  - Auto build the phar file
   - Open notifications are marked red
   - Do not show pressed key
   - Added command description
@@ -37,11 +44,3 @@ sudo mv 360top.phar /usr/local/bin/360top
   - Version handling
   - Fix: PHPStan
   - Fix: Open notifications do not have an end date
-
-
-
-- 1.0
-  - Show historic data for memory, cpu, disc space and notifications
-  - Show custom metrics
-  - Initialization script
-  - Auto build the phar file
