@@ -1,5 +1,5 @@
 {
-  "main": "bin/forrest.php",
+  "main": "bin/top.php",
   "blacklist": [
     "docs",
     ".gitignore",
