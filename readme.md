@@ -4,7 +4,7 @@ With the 360 Monitoring command line tool `360top` you are able to see all major
 
 The idea is that you do not have a context switch when you try to fix a problem.
 
-> You will need a 360 Monitoring account to use this command line tool. You can create it under: [app.360monitoring.com/signup](https://app.360monitoring.com/signup).
+> You will need a 360 Monitoring account to use this command line tool. You can create it under [app.360monitoring.com/signup](https://app.360monitoring.com/signup).
 
 
 ![Memory Metric](docs/images/360-top-1.png)
