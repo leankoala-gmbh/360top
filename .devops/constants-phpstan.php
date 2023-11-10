@@ -1,0 +1,2 @@
+<?php
+const FORREST_VERSION = '##FORREST_VERSION##';

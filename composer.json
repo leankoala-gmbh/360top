@@ -1,18 +1,24 @@
 {
-    "name": "startwind/top",
-    "autoload": {
-        "psr-4": {
-            "Startwind\\Top\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Nils Langner",
-            "email": "nils.langner@startwind.io"
-        }
-    ],
-    "require": {
-        "symfony/console": "^6.3",
-        "guzzlehttp/guzzle": "^7.8"
+  "name": "startwind/top",
+  "autoload": {
+    "psr-4": {
+      "Startwind\\Top\\": "src/"
     }
+  },
+  "authors": [
+    {
+      "name": "Nils Langner",
+      "email": "nils.langner@startwind.io"
+    }
+  ],
+  "require": {
+    "symfony/console": "^6.3",
+    "guzzlehttp/guzzle": "^7.8"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "1.11.x-dev",
+    "phpunit/phpunit": "^9",
+    "friendsofphp/php-cs-fixer": "dev-master",
+    "squizlabs/php_codesniffer": "4.0.x-dev"
+  }
 }
