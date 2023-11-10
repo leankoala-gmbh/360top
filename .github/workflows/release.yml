@@ -74,6 +74,6 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.REPO_TOKEN }}
-          file: /tmp/top.phar
+          file: /tmp/360top.phar
           asset_name: ${{ matrix.asset_name }}
           tag: ${{ github.ref }}
