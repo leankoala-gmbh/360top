@@ -26,4 +26,10 @@ directory (global install), using for example:
 sudo mv 360top.phar /usr/local/bin/360top
 ```
 
+## Change Log
 
+- 1.0.0
+  - Show historic data for memory, cpu, disc space and notifications
+  - Show custom metrics
+  - Initialization script
+  - Auto build the phar file
