@@ -68,7 +68,7 @@ jobs:
 
       - name: Move phar file to temp directory
         run: |
-          mv bin/top.phar /tmp
+          mv bin/360top.phar /tmp
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
