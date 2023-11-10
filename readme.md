@@ -16,3 +16,5 @@ directory (global install), using for example:
 ```shell
 sudo mv 360top.phar /usr/local/bin/360top
 ```
+
+![Memory Metric](docs/images/360-top-1.png)
