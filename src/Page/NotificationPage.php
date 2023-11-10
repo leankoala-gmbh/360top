@@ -26,17 +26,22 @@ class NotificationPage extends Page
             if (!$notification['end']) {
                 $end = "";
                 $duration = time() - $notification['start'];
+                $status = "open";
             } else {
                 $end = date('m-d H:i', $notification['end']);
                 $duration = $notification['end'] - $notification['start'];
+                $status = 'closed';
             }
 
             $tableData[] = [
-                str_pad(date('m-d H:i', $notification['start']), 12, ' '),
-                str_pad($end, 11, ' '),
-                str_pad((int)($duration / 60), 10, ' '),
-                str_pad($notification['metric'], 8, ' '),
-                $notification['summary']
+                "data" => [
+                    str_pad(date('m-d H:i', $notification['start']), 12, ' '),
+                    str_pad($end, 11, ' '),
+                    str_pad((int)($duration / 60), 10, ' '),
+                    str_pad($notification['metric'], 8, ' '),
+                    $notification['summary']
+                ],
+                "status" => $status
             ];
         }
 

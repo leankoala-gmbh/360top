@@ -129,9 +129,23 @@ abstract class Page
 
         foreach ($array as $index => $values) {
             $cursor->moveToPosition(3, 7 + $index);
-            foreach ($values as $value) {
-                $output->write($value . '    ');
+            if ($values['status'] === 'open') {
+                $start = '<error>';
+                $end = '</error>';
+            } else {
+                $start = '';
+                $end = '';
             }
+
+            $row = $start;
+
+            foreach ($values['data'] as $value) {
+                $row .= $value . '    ';
+            }
+
+            $row .= $end;
+
+            $output->writeln($row);
         }
     }
 
