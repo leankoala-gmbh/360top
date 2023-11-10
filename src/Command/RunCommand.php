@@ -13,12 +13,11 @@ use Startwind\Top\Page\MemoryPage;
 use Startwind\Top\Page\NotificationPage;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 
 #[AsCommand(name: 'top')]
-class RunCommand extends Command
+class RunCommand extends TopCommand
 {
     private int $currentPage = 0;
 
@@ -29,12 +28,6 @@ class RunCommand extends Command
     private Server $server;
 
     private MainFrame $mainFrame;
-
-    protected function configure()
-    {
-        $this->addOption('token', 't', InputOption::VALUE_OPTIONAL, 'The 360 monitoring user token', 'c394be60e6a4e526b7bdbb8de35507a9806a12e2259a8adc8edd9884f64403fa');
-        $this->addOption('server', 's', InputOption::VALUE_OPTIONAL, 'The 360 monitoring server id', '64d3401e31e9ea42563eb2e2');
-    }
 
     private function initMenu(): void
     {
@@ -62,7 +55,7 @@ class RunCommand extends Command
 
         $metricTypes = $this->server->getMetricTypes();
 
-        $knownMetrics = ['cpu', 'mem', 'df', 'pn', 'net', 'uptime','process', 'la', 'io', 'load_per_core'];
+        $knownMetrics = ['cpu', 'mem', 'df', 'pn', 'net', 'uptime', 'process', 'la', 'io', 'load_per_core'];
 
         $count = 0;
 
@@ -80,8 +73,15 @@ class RunCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $client = new \Startwind\Top\Client\Client($input->getOption('token'), new Client());
-        $this->server = $client->getServer($input->getOption('server'));
+        if (!file_exists($this->getConfigFile())) {
+            $output->writeln(['', '<error>No configuration file found. Please run "360top init" before.</error>', '']);
+            return Command::FAILURE;
+        }
+
+        $config = json_decode(file_get_contents($this->getConfigFile()), true);
+
+        $client = new \Startwind\Top\Client\Client($config['apiToken'], new Client());
+        $this->server = $client->getServer($config['serverId']);
 
         $this->initMenu();
 
