@@ -44,7 +44,8 @@ class MainFrame
         }
 
         $this->cursor->moveToPosition(1, $this->height);
-        $this->output->writeln('┗' . str_repeat('━', $this->width - 38) . ' Proof of concept by Nils Langner ━━┛');
+        $version = '  Version ' . TOP_VERSION . '  ';
+        $this->output->writeln('┗' . str_repeat('━', $this->width - 4 - strlen($version)) . $version . '━━┛');
 
         $this->cursor->moveToPosition(1, 1);
         $this->output->writeln('┣' . str_repeat('━', $this->width - 2) . '┫');

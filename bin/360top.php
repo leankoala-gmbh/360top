@@ -9,10 +9,11 @@ use Symfony\Component\Console\Application;
 
 const TOP_VERSION = '##TOP_VERSION##';
 const TOP_NAME = '360Top';
+const TOP_NAME_LONG = '360top - Command Line Dashboard for 360 Monitoring';
 
 $application = new Application();
 
-$application->setName('360top - Command Line Dashboard for 360 Monitoring');
+$application->setName(TOP_NAME_LONG);
 $application->setVersion(TOP_VERSION);
 
 $command = new RunCommand();

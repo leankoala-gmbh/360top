@@ -53,7 +53,7 @@ class RunCommand extends TopCommand
 
         $mainFrame->setMenu($this->menu);
 
-        $mainFrame->setHeadline('360 Monitoring (by WebPros)');
+        $mainFrame->setHeadline(TOP_NAME_LONG);
         $mainFrame->setFooter($this->server->get360Link());
 
         (new MemoryPage())->render($output, $mainFrame, $this->server, $this->currentPage, $this->getBestInterval());
