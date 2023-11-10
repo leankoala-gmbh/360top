@@ -14,7 +14,8 @@
   "require": {
     "symfony/console": "^6.3",
     "guzzlehttp/guzzle": "^7.8",
-    "rector/rector": "0.17.*"
+    "rector/rector": "0.17.*",
+    "consolidation/self-update": "2.x-dev"
   },
   "require-dev": {
     "phpstan/phpstan": "1.11.x-dev",
