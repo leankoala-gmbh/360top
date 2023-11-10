@@ -34,6 +34,8 @@ class Client
                     $url .= '&' . $key . '=' . $value;
                 }
             }
+            //  var_dump($url);
+
             $response = $this->client->get($url, ['headers' => ['Authorization' => "Bearer " . $this->apiToken]]);
         } else {
             throw  new \RuntimeException('Method not implemented yet.');

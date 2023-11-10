@@ -88,7 +88,7 @@ class RunCommand extends TopCommand
 
         $metricTypes = $this->server->getMetricTypes();
 
-        $knownMetrics = ['cpu', 'mem', 'df', 'pn', 'net', 'uptime', 'process', 'la', 'io', 'load_per_core'];
+        $knownMetrics = ['cpu', 'mem', 'df', 'pn', 'net', 'uptime', 'process', 'la', 'io', 'load_per_core', 'swp'];
 
         $count = 0;
 

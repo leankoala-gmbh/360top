@@ -23,17 +23,24 @@ class NotificationPage extends Page
         $tableData = [];
 
         foreach ($notifications as $notification) {
-            $duration = $notification['end'] - $notification['start'];
+            if (!$notification['end']) {
+                $end = "";
+                $duration = time() - $notification['start'];
+            } else {
+                $end = date('m-d H:i', $notification['end']);
+                $duration = $notification['end'] - $notification['start'];
+            }
 
             $tableData[] = [
                 str_pad(date('m-d H:i', $notification['start']), 12, ' '),
-                str_pad(date('m-d H:i', $notification['end']), 9, ' '),
+                str_pad($end, 11, ' '),
                 str_pad((int)($duration / 60), 10, ' '),
+                str_pad($notification['metric'], 8, ' '),
                 $notification['summary']
             ];
         }
 
-        $this->renderTable($output, ['Start time', 'End time', ' Duration', 'Message'], $tableData);
+        $this->renderTable($output, ['Start time', 'End time', ' Duration', 'Metric', 'Message'], $tableData);
 
         $mainFrame->setInfo('Incident history');
     }
