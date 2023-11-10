@@ -18,7 +18,7 @@ class MainFrame
 
     private string $info = "";
     private string $footer = "";
-    private array $menu;
+    private array $menu = [];
     private int $currentPage = 0;
     private int $pageCount = 0;
 
@@ -27,8 +27,10 @@ class MainFrame
         $this->output = $output;
         $this->cursor = new Cursor($output);
 
-        $this->height = (new Terminal())->getHeight();
-        $this->width = (new Terminal())->getWidth();
+        $terminal = new Terminal();
+
+        $this->height = $terminal->getHeight();
+        $this->width = $terminal->getWidth();
     }
 
     public function render(): void

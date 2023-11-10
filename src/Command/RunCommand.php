@@ -113,6 +113,7 @@ class RunCommand extends TopCommand
     #[NoReturn] private function doRun(OutputInterface $output, MainFrame $mainFrame): void
     {
         system('stty cbreak');
+        system('stty -echo');
 
         // stream_set_blocking(STDIN, false);
 
