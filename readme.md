@@ -28,6 +28,11 @@ sudo mv 360top.phar /usr/local/bin/360top
 
 ## Change Log
 
+- develop
+  - Open notifications are marked red
+  - Fix: Open notifications do not have an end date
+
+
 - 1.0.0
   - Show historic data for memory, cpu, disc space and notifications
   - Show custom metrics
