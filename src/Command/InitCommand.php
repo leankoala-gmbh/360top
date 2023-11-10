@@ -21,6 +21,7 @@ class InitCommand extends TopCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var \Symfony\Component\Console\Helper\QuestionHelper $helper */
         $helper = $this->getHelper('question');
 
         if (file_exists(self::AGENT_INI_FILE)) {

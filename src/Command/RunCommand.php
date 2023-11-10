@@ -111,7 +111,7 @@ class RunCommand extends TopCommand
         return max(($width / 3) - 10, $this->currentIntervalInMinutes);
     }
 
-    #[NoReturn] private function doRun(OutputInterface $output, MainFrame $mainFrame): void
+    private function doRun(OutputInterface $output, MainFrame $mainFrame): void
     {
         system('stty cbreak');
         system('stty -echo');

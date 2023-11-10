@@ -37,7 +37,7 @@ class NotificationPage extends Page
                 "data" => [
                     str_pad(date('m-d H:i', $notification['start']), 12, ' '),
                     str_pad($end, 11, ' '),
-                    str_pad((int)($duration / 60), 10, ' '),
+                    str_pad((string)((int)($duration / 60)), 10, ' '),
                     str_pad($notification['metric'], 8, ' '),
                     $notification['summary']
                 ],

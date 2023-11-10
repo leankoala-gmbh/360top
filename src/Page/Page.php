@@ -80,7 +80,7 @@ abstract class Page
             $padLength = 3;
         } else {
             $unitString = '';
-            $padLength = '';
+            $padLength = 0;
             foreach ($data as $value) {
                 $maxValue = max($value, $maxValue);
             }
@@ -92,8 +92,8 @@ abstract class Page
         $steps = [];
 
         for ($i = 1; $i <= $height; $i++) {
-            if ($padLength) {
-                $number = str_pad($step * $i, $padLength, ' ', STR_PAD_LEFT);
+            if ($padLength > 0) {
+                $number = str_pad((string)($step * $i), $padLength, ' ', STR_PAD_LEFT);
             } else {
                 $number = $step * $i;
                 if ($number > 10) {
