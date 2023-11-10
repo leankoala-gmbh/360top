@@ -8,7 +8,7 @@ use Startwind\Top\Command\RunCommand;
 use Symfony\Component\Console\Application;
 
 const TOP_VERSION = '##TOP_VERSION##';
-const TOP_NAME = '360Top';
+const TOP_NAME = '360top';
 const TOP_NAME_LONG = '360top - Command Line Dashboard for 360 Monitoring';
 
 $application = new Application();
