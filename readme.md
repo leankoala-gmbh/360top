@@ -31,6 +31,9 @@ sudo mv 360top.phar /usr/local/bin/360top
 - develop
   - Open notifications are marked red
   - Do not show pressed key
+  - Added command description
+  - Set version number
+  - Add `self-update` command
   - Fix: Open notifications do not have an end date
 
 

@@ -1,2 +1,2 @@
 <?php
-const FORREST_VERSION = '##FORREST_VERSION##';
+const TOP_VERSION = '##TOP_VERSION##';

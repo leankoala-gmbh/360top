@@ -30,6 +30,7 @@ class RunCommand extends TopCommand
     protected function configure()
     {
         $this->setName('top');
+        $this->setDescription('Run the interactive monitoring dashboard.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

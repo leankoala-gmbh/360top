@@ -26,7 +26,7 @@ jobs:
         uses: jacobtomlinson/gha-find-replace@master
         with:
           exclude: "vendor/"
-          find: "##360TOP_VERSION##"
+          find: "##TOP_VERSION##"
           replace: ${{ steps.get_version.outputs.VERSION }}
 
       - name: Setup PHP
