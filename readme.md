@@ -33,6 +33,7 @@ sudo mv 360top.phar /usr/local/bin/360top
   - The interval for the data can be chosen (30min, 1h, 1d and 1m)
   - Added correct label to graph
   - API requests are cached for 60 seconds
+  - Accept ESC to exit drop down menu
   - Fix: Pagination works with only one page
 
 

@@ -35,7 +35,12 @@ class RunCommand extends TopCommand
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (!file_exists($this->getConfigFile())) {
-            $output->writeln(['', '<error>No configuration file found. Please run "360top init" before.</error>', '']);
+            $output->writeln([
+                    '<error>                                                                ',
+                    '  No configuration file found. Please run "360top init" before. ',
+                    '                                                                </error>'
+                ]
+            );
             return Command::FAILURE;
         }
 
