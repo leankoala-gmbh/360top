@@ -142,8 +142,6 @@ class RunCommand extends TopCommand
 
             $arrowKey = preg_replace('/[^[:print:]\n]/u', '', mb_convert_encoding($commandCharacter, 'UTF-8', 'UTF-8'));
 
-            $mainFrame->setPage(0, 0);
-
             if ($arrowKey === "[C") {
                 $mainFrame->incCurrentPage();
                 $commandCharacter = $lastChar;
@@ -172,6 +170,9 @@ class RunCommand extends TopCommand
             if (!$mainFrame->isDropDownOpen()) {
                 foreach ($this->menu as $menu) {
                     if (strtolower($menu['shortcut']) === strtolower($commandCharacter)) {
+                        if ($lastChar != $commandCharacter) {
+                            $mainFrame->setPage(0, 0);
+                        }
                         $lastChar = $commandCharacter;
                         if (array_key_exists('metric', $menu)) {
                             $menu['page']->render($output, $mainFrame, $this->server, $menu['metric'], $this->getBestInterval());

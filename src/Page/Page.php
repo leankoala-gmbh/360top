@@ -187,7 +187,7 @@ abstract class Page
 
     protected function getPageOptions(MainFrame $mainFrame, array $timeSeries): array
     {
-        $max = $mainFrame->getMaxNumberOfGraphs(self::METRIC_HEIGHT + 5);
+        $max = $mainFrame->getMaxNumberOfGraphs(self::METRIC_HEIGHT + 7);
 
         $pageCount = (int)((count($timeSeries) / $max) + 1);
 
