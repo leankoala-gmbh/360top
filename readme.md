@@ -7,7 +7,7 @@ The idea is that you do not have a context switch when you try to fix a problem.
 > You will need a 360 Monitoring account to use this command line tool. You can create it under [app.360monitoring.com/signup](https://app.360monitoring.com/signup).
 
 
-![Memory Metric](docs/images/360-top-1.png)
+![Memory Metric](docs/images/360-top-2.png)
 
 ## Installation
 
