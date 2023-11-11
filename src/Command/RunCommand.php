@@ -3,7 +3,6 @@
 namespace Startwind\Top\Command;
 
 use GuzzleHttp\Client;
-use JetBrains\PhpStorm\NoReturn;
 use Startwind\Top\Application\MainFrame;
 use Startwind\Top\Client\Server;
 use Startwind\Top\Page\CpuPage;
