@@ -1,4 +1,4 @@
-# 360 Advanced TOP
+# 360top - Command Line Dashboard for 360 Monitoring
 
 With the 360 Monitoring command line tool `360top` you are able to see all major monitoring information for the current server.
 
@@ -25,6 +25,17 @@ directory (global install), using for example:
 ```shell
 sudo mv 360top.phar /usr/local/bin/360top
 ```
+
+After the installation you just have to call the `init` command by running:
+
+```shell
+360top init
+```
+
+There you have to enter your server ID (if the 360 agent is installed the tool will find the ID automatically) and the API token which you can create in the 360 Monitoring backend.
+
+- [Plesk Platform 360 API key URL](https://monitoring.platform360.io/api-keys/list)
+- [360 Monitoring API key URL](https://app.360monitoring.com/api-keys/list)
 
 ## Change Log
 
