@@ -50,8 +50,7 @@ class RunCommand extends TopCommand
         $this->server = $client->getServer($config['serverId']);
 
         $mainFrame = new MainFrame($output);
-
-
+        
         $this->initMenu();
         $this->initIntervalMenu();
 
