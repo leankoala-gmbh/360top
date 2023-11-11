@@ -29,7 +29,7 @@ sudo mv 360top.phar /usr/local/bin/360top
 ## Change Log
 
 - **develop**
-  - Init now works with command line options and can be used in scripts  
+  - `init` now works with command line options and can be used in scripts  
 
 
 - **Version 1.0**
