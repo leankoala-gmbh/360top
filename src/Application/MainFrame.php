@@ -231,18 +231,18 @@ class MainFrame
 
     public function incCurrentPage(): void
     {
-        $this->currentPage = min($this->currentPage + 1, $this->pageCount);
+        $this->currentPage = min($this->currentPage + 1, $this->pageCount + 1);
     }
 
     public function decCurrentPage(): void
     {
-        $this->currentPage = max($this->currentPage - 1, 1);
+        $this->currentPage = max($this->currentPage - 1, 0);
     }
 
     private function renderPage(): void
     {
         if ($this->pageCount != 0) {
-            $label = '← ' . $this->currentPage . ' / ' . $this->pageCount . ' →';
+            $label = '← ' . ($this->currentPage + 1) . ' / ' . $this->pageCount . ' →';
             $this->cursor->moveToPosition($this->width - strlen($label) + 2, 2);
             $this->output->write($label);
         }
@@ -250,7 +250,7 @@ class MainFrame
 
     public function getMaxNumberOfGraphs($graphHeight): int
     {
-        return (int)($this->height / $graphHeight) - 1;
+        return (int)($this->height / $graphHeight);
     }
 
     public function getWidth(): int

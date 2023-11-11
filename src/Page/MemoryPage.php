@@ -13,9 +13,6 @@ class MemoryPage extends Page
     {
         $mainFrame->render();
 
-        var_dump($intervalInMinutes);
-        // var_dump($server);
-
         $data = $this->getData($server, Server::METRIC_MEMORY, $intervalInMinutes);
 
         if (!$data) {

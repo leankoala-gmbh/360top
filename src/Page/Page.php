@@ -191,13 +191,14 @@ abstract class Page
         $max = $mainFrame->getMaxNumberOfGraphs(self::METRIC_HEIGHT + 5);
 
         $pageCount = (int)((count($timeSeries) / $max) + 1);
+
         $currentPage = min($pageCount - 1, $mainFrame->getCurrentPage());
 
         $start = $max * $currentPage;
         $end = $max * ($currentPage + 1);
 
         if (count($timeSeries) > $max) {
-            $mainFrame->setPage($currentPage + 1, $pageCount);
+            $mainFrame->setPage($currentPage, $pageCount);
         }
 
         return [
