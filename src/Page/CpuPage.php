@@ -15,7 +15,7 @@ class CpuPage extends Page
 
         $timeSeries = $data['data']['cpu']['average']['usage'];
 
-        $this->renderGraph($output, "CPU (average)", 3, 15, $timeSeries, self::UNIT_PERCENT);
+        $this->renderGraph($output, "CPU (average)", 3, 15, $timeSeries, self::UNIT_PERCENT, 30, $intervalInMinutes);
 
         $mainFrame->setInfo('CPU history');
     }

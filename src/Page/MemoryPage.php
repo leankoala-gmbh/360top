@@ -15,8 +15,8 @@ class MemoryPage extends Page
 
         $memData = $data['data']['average'];
 
-        $this->renderGraph($output, "Memory (active percent)", 3, 15, $memData['active_percent'], self::UNIT_PERCENT);
-        $this->renderGraph($output, "Memory (free)", 3, 30, $memData['p'], self::UNIT_PERCENT);
+        $this->renderGraph($output, "Memory (active percent)", 3, 15, $memData['active_percent'], self::UNIT_PERCENT, 30, $intervalInMinutes);
+        $this->renderGraph($output, "Memory (free)", 3, 30, $memData['p'], self::UNIT_PERCENT, 30, $intervalInMinutes);
 
         $mainFrame->setInfo('Memory history');
     }

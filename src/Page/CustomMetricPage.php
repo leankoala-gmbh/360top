@@ -23,7 +23,7 @@ class CustomMetricPage extends Page
 
         foreach ($metrics as $name => $values) {
             if ($count <= $pageOption['end'] && $count > $pageOption['start']) {
-                $this->renderGraph($output, $name, 3, $position * (self::METRIC_HEIGHT + 5), $values);
+                $this->renderGraph($output, $name, 3, $position * (self::METRIC_HEIGHT + 5), $values, '', 30,$intervalInMinutes);
                 $position++;
             }
             $count++;

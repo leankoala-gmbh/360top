@@ -18,7 +18,7 @@ class RunCommand extends TopCommand
 {
     private int $currentPage = 0;
 
-    private int $currentIntervalInMinutes = 60;
+    private int $currentIntervalInMinutes = 30;
 
     private array $menu = [];
 

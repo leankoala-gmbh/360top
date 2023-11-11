@@ -19,9 +19,24 @@ abstract class Page
         return $server->getMetric($metric, $start);
     }
 
-    protected function renderGraph(OutputInterface $output, string $headline, int $positionX, int $positionY, array $data, string $unit = "", int $width = 30): void
+    private function getLabelType($duration): string
+    {
+        if ($duration > 60 * 24 * 2) {
+            $labelType = 'd';
+        } else if ($duration > 60 * 23) {
+            $labelType = 'h';
+        } else {
+            $labelType = 'm';
+        }
+
+        return $labelType;
+    }
+
+    protected function renderGraph(OutputInterface $output, string $headline, int $positionX, int $positionY, array $data, string $unit = "", int $width = 30, $durationInSeconds = 30): void
     {
         $height = self::METRIC_HEIGHT;
+
+        $labelType = $this->getLabelType($durationInSeconds);
 
         $cursor = new Cursor($output);
 
@@ -42,6 +57,7 @@ abstract class Page
         }
 
         $x = 0;
+
         foreach ($preparedDataArray['data'] as $timestamp => $value) {
 
             for ($i = 0; $i < $height; $i++) {
@@ -51,7 +67,20 @@ abstract class Page
                 }
             }
 
-            $hour = date('i', $timestamp);
+            switch ($labelType) {
+                case 'm':
+                    $hour = date('i', $timestamp);
+                    break;
+                case 'h':
+                    $hour = date('H', $timestamp);
+                    break;
+                case 'd':
+                    $hour = date('d', $timestamp);
+                    break;
+                default:
+                    $hour = '??';
+            }
+
             $cursor->moveToPosition($x + $positionX + $labelMaxLength + 3, $positionY + 3);
             $output->write($hour);
 

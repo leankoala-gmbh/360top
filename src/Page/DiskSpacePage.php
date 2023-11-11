@@ -27,7 +27,7 @@ class DiskSpacePage extends Page
                 foreach ($timeSeries as $timeStamp => $value) {
                     $humanReadableTimeSeries[$timeStamp] = (int)($value / (1000 * 1000 * 1000));
                 }
-                $this->renderGraph($output, "Mount point " . $mountName, 3, (self::METRIC_HEIGHT + 5) * $position, $humanReadableTimeSeries);
+                $this->renderGraph($output, "Mount point " . $mountName, 3, (self::METRIC_HEIGHT + 5) * $position, $humanReadableTimeSeries, '', 30,$intervalInMinutes);
                 $position++;
             }
             $count++;

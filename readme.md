@@ -28,8 +28,9 @@ sudo mv 360top.phar /usr/local/bin/360top
 
 ## Change Log
 
-- **develop**
+- **Version 1.1**
   - `init` now works with command line options and can be used in scripts  
+  - The interval for the data can be chosen (30min, 1h, 1d and 1m)
 
 
 - **Version 1.0**
