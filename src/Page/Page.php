@@ -62,7 +62,7 @@ abstract class Page
         $output->writeln("");
     }
 
-    private function prepareData(array $data, $width = 30, $unit = ""): array
+    private function prepareData(array $data, $numberOfBars = 30, $unit = ""): array
     {
         $height = self::METRIC_HEIGHT;
 
@@ -72,7 +72,7 @@ abstract class Page
 
         $elementCount = count($data);
 
-        $groupSize = max(1, (int)($elementCount / $width));
+        $groupSize = max(1, ceil($elementCount / $numberOfBars));
 
         if ($unit === self::UNIT_PERCENT) {
             $step = (int)(100 / $height);
@@ -105,8 +105,16 @@ abstract class Page
             $steps[$i] = $number . $unitString;
         }
 
+        $elementValue = 0;
+        $count = 0;
+
         foreach ($data as $timestamp => $value) {
-            $preparedData[$timestamp] = (int)($value / $step);
+            $elementValue += $value;
+            if ($count % $groupSize === 0) {
+                $preparedData[$timestamp] = (int)(($elementValue / $groupSize) / $step);
+                $elementValue = 0;
+            }
+            $count++;
         }
 
         return [

@@ -18,7 +18,7 @@ class RunCommand extends TopCommand
 {
     private int $currentPage = 0;
 
-    private int $currentIntervalInMinutes = 30;
+    private int $currentIntervalInMinutes = 60;
 
     private array $menu = [];
 
@@ -48,7 +48,6 @@ class RunCommand extends TopCommand
 
         $mainFrame = new MainFrame($output);
 
-        $this->mainFrame = $mainFrame;
 
         $this->initMenu();
         $this->initIntervalMenu();
@@ -59,9 +58,11 @@ class RunCommand extends TopCommand
         $mainFrame->setHeadline(TOP_NAME_LONG);
         $mainFrame->setFooter($this->server->get360Link());
 
+        $this->mainFrame = $mainFrame;
+
         (new MemoryPage())->render($output, $mainFrame, $this->server, $this->currentPage, $this->getBestInterval());
 
-        $this->doRun($output, $mainFrame);
+        $this->doRun($output);
 
         return Command::SUCCESS;
     }
@@ -108,7 +109,7 @@ class RunCommand extends TopCommand
         }
     }
 
-    private function initIntervalMenu()
+    private function initIntervalMenu(): void
     {
         $this->intervalMenu = [
             ['caption' => 'last 30 minutes', 'value' => 30],
@@ -118,14 +119,15 @@ class RunCommand extends TopCommand
         ];
     }
 
-    private function getBestInterval()
+    private function getBestInterval(): int
     {
-        $width = $this->mainFrame->getWidth();
-        return max(($width / 3) - 10, $this->currentIntervalInMinutes);
+        return $this->currentIntervalInMinutes;
     }
 
-    private function doRun(OutputInterface $output, MainFrame $mainFrame): void
+    private function doRun(OutputInterface $output): void
     {
+        $mainFrame = $this->mainFrame;
+
         system('stty cbreak');
         system('stty -echo');
 
