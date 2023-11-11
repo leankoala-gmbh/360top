@@ -91,7 +91,8 @@ class RunCommand extends TopCommand
 
         $metricTypes = $this->server->getMetricTypes();
 
-        $knownMetrics = ['cpu', 'mem', 'df', 'pn', 'net', 'uptime', 'process', 'la', 'io', 'load_per_core', 'swp'];
+        $knownMetrics = ['cpu', 'mem', 'df', 'pn', 'net', 'uptime', 'la', 'io', 'load_per_core', 'swp'];
+        // $knownMetrics = ['cpu'];
 
         $count = 0;
 
@@ -103,6 +104,7 @@ class RunCommand extends TopCommand
                     'shortcut' => $count,
                     'page' => new CustomMetricPage()
                 ];
+                $count++;
             }
         }
     }
@@ -164,6 +166,10 @@ class RunCommand extends TopCommand
                 $mainFrame->closeDropDown();
                 $index = $mainFrame->getDropDownIndex();
                 $this->currentIntervalInMinutes = $this->intervalMenu[$index]['value'];
+                $commandCharacter = $lastChar;
+            } else if (ord($arrowKey) === 0) {
+                $mainFrame->closeDropDown();
+                $mainFrame->setDropDownByInterval($this->currentIntervalInMinutes);
                 $commandCharacter = $lastChar;
             }
 

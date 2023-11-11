@@ -117,6 +117,16 @@ class MainFrame
         $this->renderDropDownMenu();
     }
 
+    public function setDropDownByInterval(int $interval): void
+    {
+        foreach ($this->dropDownMenu as $index => $dropDownMenu) {
+            if ($dropDownMenu['value'] == $interval) {
+                $this->dropDownIndex = $index;
+            }
+        }
+        $this->renderDropDownMenu();
+    }
+
     private function renderDropDownMenu(): void
     {
         $offset = $this->getDropDownMenuWidth();
