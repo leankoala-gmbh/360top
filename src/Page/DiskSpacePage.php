@@ -26,8 +26,8 @@ class DiskSpacePage extends Page
         $position = 1;
 
         foreach ($mounts as $mountName => $timeSeries) {
-            $free = $this->byteToHumanReadable(end($timeSeries[self::FIELD_BYTES_FREE]));
-            $used = $this->byteToHumanReadable(end($timeSeries[self::FIELD_BYTES_USED]));
+            $free = $this->byteToHumanReadable((int)end($timeSeries[self::FIELD_BYTES_FREE]));
+            $used = $this->byteToHumanReadable((int)end($timeSeries[self::FIELD_BYTES_USED]));
 
             if ($count <= $pageOption['end'] && $count > $pageOption['start']) {
                 $this->renderGraph($output, "Mount point \"" . $mountName . '" (used: ' . $used . ', free: ' . $free . ')', 3, (self::METRIC_HEIGHT + 5) * $position, $timeSeries[self::FIELD_PERCENTAGE_USED], self::UNIT_PERCENT, 30, $intervalInMinutes);
