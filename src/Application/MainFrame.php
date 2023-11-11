@@ -22,6 +22,12 @@ class MainFrame
     private int $currentPage = 0;
     private int $pageCount = 0;
 
+    private array $dropDownMenu = [];
+
+    private int $dropDownIndex = 0;
+
+    private bool $dropDownIsOpen = false;
+
     public function __construct(OutputInterface $output)
     {
         $this->output = $output;
@@ -54,6 +60,7 @@ class MainFrame
         $this->output->writeln('┣' . str_repeat('━', $this->width - 2) . '┫');
 
         $this->renderHeadline();
+        $this->renderDropDownMenu();
         $this->renderInfo();
         $this->renderFooter();
 
@@ -68,7 +75,9 @@ class MainFrame
 
     private function renderMenu(): void
     {
-        $this->cursor->moveToPosition(3, 2);
+        $offset = $this->getDropDownMenuWidth();
+
+        $this->cursor->moveToPosition($offset + 4, 2);
 
         foreach ($this->menu as $menu) {
             $this->output->write($menu['label'] . '     ');
@@ -98,6 +107,101 @@ class MainFrame
         $info = str_pad($this->info, 20, ' ', STR_PAD_LEFT);
         $this->cursor->moveToPosition($this->width - strlen($info) - 2, 0);
         $this->output->write($info);
+    }
+
+    public function setDropDownMenu(array $menuArray): void
+    {
+        $this->dropDownMenu = $menuArray;
+        $this->dropDownIndex = 0;
+
+        $this->renderDropDownMenu();
+    }
+
+    private function renderDropDownMenu(): void
+    {
+        $offset = $this->getDropDownMenuWidth();
+
+        $this->cursor->moveToPosition($offset, 1);
+        $this->output->write('┳');
+
+        $this->cursor->moveToPosition($offset, 3);
+        $this->output->write('┻');
+
+        $this->cursor->moveToPosition(3, 2);
+
+        if ($this->dropDownIsOpen) {
+            $this->output->write(str_pad($this->dropDownMenu[$this->dropDownIndex]['caption'], $offset - 8, ' ') . '  ▲  ┃');
+
+            foreach ($this->dropDownMenu as $index => $downMenu) {
+                $this->cursor->moveToPosition(3, 3 + ($index + 1) * 2);
+
+                if ($index == $this->dropDownIndex) {
+                    $checkedBegin = '<info>';
+                    $checkedEnd = '</info>';
+                } else {
+                    $checkedBegin = '';
+                    $checkedEnd = '';
+                }
+
+                $this->output->write($checkedBegin . str_pad($this->dropDownMenu[$index]['caption'], $offset - 3, ' ') . $checkedEnd . '┃');
+                $this->cursor->moveToPosition(3, 2 + ($index + 1) * 2);
+                $this->output->write(str_pad('', $offset - 3, ' ') . '┃');
+            }
+
+            $this->cursor->moveToPosition($offset, 3);
+            $this->output->write('╋');
+
+            $this->cursor->moveToPosition(0, 4 + (count($this->dropDownMenu) * 2));
+            $this->output->write('┃' . str_pad('', $offset - 2, ' ') . '┃');
+            $this->cursor->moveToPosition(0, 5 + (count($this->dropDownMenu) * 2));
+            $this->output->write('┗' . str_repeat('━', $offset - 2,) . '┛');
+        } else {
+            $this->output->write(str_pad($this->dropDownMenu[$this->dropDownIndex]['caption'], $offset - 8, ' ') . '  ▼  ┃');
+        }
+    }
+
+    private function getDropDownMenuWidth(): int
+    {
+        $offset = 0;
+        foreach ($this->dropDownMenu as $downMenu) {
+            $offset = max(strlen($downMenu['caption']), $offset);
+        }
+
+        return $offset + 8;
+    }
+
+    public function openDropDown(): void
+    {
+        $this->dropDownIsOpen = true;
+        $this->renderDropDownMenu();
+    }
+
+    public function closeDropDown(): void
+    {
+        $this->dropDownIsOpen = false;
+        $this->renderDropDownMenu();
+    }
+
+    public function incDropDownIndex(): void
+    {
+        $this->dropDownIndex = min($this->dropDownIndex + 1, count($this->dropDownMenu) - 1);
+        $this->renderDropDownMenu();
+    }
+
+    public function decDropDownIndex(): void
+    {
+        $this->dropDownIndex = max($this->dropDownIndex - 1, 0);
+        $this->renderDropDownMenu();
+    }
+
+    public function isDropDownOpen(): bool
+    {
+        return $this->dropDownIsOpen;
+    }
+
+    public function getDropDownIndex(): int
+    {
+        return $this->dropDownIndex;
     }
 
     public function setFooter(string $footer): void

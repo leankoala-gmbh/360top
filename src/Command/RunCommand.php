@@ -22,6 +22,8 @@ class RunCommand extends TopCommand
 
     private array $menu = [];
 
+    private array $intervalMenu = [];
+
     private Server $server;
 
     private MainFrame $mainFrame;
@@ -44,12 +46,14 @@ class RunCommand extends TopCommand
         $client = new \Startwind\Top\Client\Client($config['apiToken'], new Client());
         $this->server = $client->getServer($config['serverId']);
 
-        $this->initMenu();
-
         $mainFrame = new MainFrame($output);
 
         $this->mainFrame = $mainFrame;
 
+        $this->initMenu();
+        $this->initIntervalMenu();
+
+        $mainFrame->setDropDownMenu($this->intervalMenu);
         $mainFrame->setMenu($this->menu);
 
         $mainFrame->setHeadline(TOP_NAME_LONG);
@@ -104,6 +108,16 @@ class RunCommand extends TopCommand
         }
     }
 
+    private function initIntervalMenu()
+    {
+        $this->intervalMenu = [
+            ['caption' => 'last 30 minutes', 'value' => 30],
+            ['caption' => 'last hour', 'value' => 60],
+            ['caption' => 'last day', 'value' => 60 * 24],
+            ['caption' => 'last month', 'value' => 60 * 24 * 30],
+        ];
+    }
+
     private function getBestInterval()
     {
         $width = $this->mainFrame->getWidth();
@@ -137,18 +151,37 @@ class RunCommand extends TopCommand
                 $this->currentPage--;
                 if ($this->currentPage < 0) $this->currentPage = 0;
                 $commandCharacter = $lastChar;
+            } else if ($arrowKey === "[B") {
+                if ($mainFrame->isDropDownOpen()) {
+                    $mainFrame->incDropDownIndex();
+                } else {
+                    $mainFrame->openDropDown();
+                }
+            } else if ($arrowKey === "[A") {
+                if ($mainFrame->isDropDownOpen()) {
+                    $mainFrame->decDropDownIndex();
+                } else {
+                    $mainFrame->openDropDown();
+                }
+            } else if (ord($arrowKey) === 10) {
+                $mainFrame->closeDropDown();
+                $index = $mainFrame->getDropDownIndex();
+                $this->currentIntervalInMinutes = $this->intervalMenu[$index]['value'];
+                $commandCharacter = $lastChar;
             }
 
-            foreach ($this->menu as $menu) {
-                if (strtolower($menu['shortcut']) === strtolower($commandCharacter)) {
-                    if ($lastChar != $commandCharacter) {
-                        $this->currentPage = 0;
-                    }
-                    $lastChar = $commandCharacter;
-                    if (array_key_exists('metric', $menu)) {
-                        $menu['page']->render($output, $mainFrame, $this->server, $menu['metric'], $this->currentPage, $this->getBestInterval());
-                    } else {
-                        $menu['page']->render($output, $mainFrame, $this->server, $this->currentPage, $this->getBestInterval());
+            if (!$mainFrame->isDropDownOpen()) {
+                foreach ($this->menu as $menu) {
+                    if (strtolower($menu['shortcut']) === strtolower($commandCharacter)) {
+                        if ($lastChar != $commandCharacter) {
+                            $this->currentPage = 0;
+                        }
+                        $lastChar = $commandCharacter;
+                        if (array_key_exists('metric', $menu)) {
+                            $menu['page']->render($output, $mainFrame, $this->server, $menu['metric'], $this->currentPage, $this->getBestInterval());
+                        } else {
+                            $menu['page']->render($output, $mainFrame, $this->server, $this->currentPage, $this->getBestInterval());
+                        }
                     }
                 }
             }
