@@ -224,6 +224,21 @@ class MainFrame
         $this->renderPage();
     }
 
+    public function getCurrentPage(): int
+    {
+        return $this->currentPage;
+    }
+
+    public function incCurrentPage(): void
+    {
+        $this->currentPage = min($this->currentPage + 1, $this->pageCount);
+    }
+
+    public function decCurrentPage(): void
+    {
+        $this->currentPage = max($this->currentPage - 1, 1);
+    }
+
     private function renderPage(): void
     {
         if ($this->pageCount != 0) {

@@ -8,7 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CpuPage extends Page
 {
-    public function render(OutputInterface $output, MainFrame $mainFrame, Server $server, int $currentPage, int $intervalInMinutes): void
+    public function render(OutputInterface $output, MainFrame $mainFrame, Server $server, int $intervalInMinutes): void
     {
         $mainFrame->render();
         $data = $this->getData($server, Server::METRIC_CPU, $intervalInMinutes);

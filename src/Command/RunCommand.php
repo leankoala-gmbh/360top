@@ -60,7 +60,7 @@ class RunCommand extends TopCommand
 
         $this->mainFrame = $mainFrame;
 
-        (new MemoryPage())->render($output, $mainFrame, $this->server, $this->currentPage, $this->getBestInterval());
+        (new MemoryPage())->render($output, $mainFrame, $this->server, $this->getBestInterval());
 
         $this->doRun($output);
 
@@ -147,11 +147,10 @@ class RunCommand extends TopCommand
             $mainFrame->setPage(0, 0);
 
             if ($arrowKey === "[C") {
-                $this->currentPage++;
+                $mainFrame->incCurrentPage();
                 $commandCharacter = $lastChar;
             } else if ($arrowKey === "[D") {
-                $this->currentPage--;
-                if ($this->currentPage < 0) $this->currentPage = 0;
+                $mainFrame->decCurrentPage();
                 $commandCharacter = $lastChar;
             } else if ($arrowKey === "[B") {
                 if ($mainFrame->isDropDownOpen()) {
@@ -180,9 +179,9 @@ class RunCommand extends TopCommand
                         }
                         $lastChar = $commandCharacter;
                         if (array_key_exists('metric', $menu)) {
-                            $menu['page']->render($output, $mainFrame, $this->server, $menu['metric'], $this->currentPage, $this->getBestInterval());
+                            $menu['page']->render($output, $mainFrame, $this->server, $menu['metric'], $this->getBestInterval());
                         } else {
-                            $menu['page']->render($output, $mainFrame, $this->server, $this->currentPage, $this->getBestInterval());
+                            $menu['page']->render($output, $mainFrame, $this->server, $this->getBestInterval());
                         }
                     }
                 }

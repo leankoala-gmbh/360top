@@ -8,31 +8,48 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class DiskSpacePage extends Page
 {
-    public function render(OutputInterface $output, MainFrame $mainFrame, Server $server, int $currentPage, int $intervalInMinutes): void
+    const FIELD_PERCENTAGE_USED = 'percentage_used';
+    const FIELD_BYTES_FREE = 'bytes_free';
+    const FIELD_BYTES_USED = 'bytes_used';
+
+    public function render(OutputInterface $output, MainFrame $mainFrame, Server $server, int $intervalInMinutes): void
     {
         $mainFrame->render();
 
-        $data = $this->getData($server, Server::METRIC_DISK_SPACE, $intervalInMinutes);
+        $data = $this->getData($server, Server::METRIC_DISK, $intervalInMinutes);
 
-        $mounts = $data['data']['average'];
+        $mounts = $data['data']['disk'];
 
-        $pageOption = $this->getPageOptions($mainFrame, $currentPage, $mounts);
+        $pageOption = $this->getPageOptions($mainFrame, $mounts);
 
         $count = 1;
         $position = 1;
 
         foreach ($mounts as $mountName => $timeSeries) {
+            $free = $this->byteToHumanReadable(end($timeSeries[self::FIELD_BYTES_FREE]));
+            $used = $this->byteToHumanReadable(end($timeSeries[self::FIELD_BYTES_USED]));
+
             if ($count <= $pageOption['end'] && $count > $pageOption['start']) {
-                $humanReadableTimeSeries = [];
-                foreach ($timeSeries as $timeStamp => $value) {
-                    $humanReadableTimeSeries[$timeStamp] = (int)($value / (1000 * 1000 * 1000));
-                }
-                $this->renderGraph($output, "Mount point " . $mountName, 3, (self::METRIC_HEIGHT + 5) * $position, $humanReadableTimeSeries, '', 30,$intervalInMinutes);
+                $this->renderGraph($output, "Mount point \"" . $mountName . '" (used: ' . $used . ', free: ' . $free . ')', 3, (self::METRIC_HEIGHT + 5) * $position, $timeSeries[self::FIELD_PERCENTAGE_USED], self::UNIT_PERCENT, 30, $intervalInMinutes);
                 $position++;
             }
+
             $count++;
         }
 
         $mainFrame->setInfo('Disk space history');
+    }
+
+    protected function byteToHumanReadable(int $bytes): string
+    {
+        $bytesInMb = $bytes / 1024 / 1024;
+
+        if ($bytesInMb > 1000) {
+            $result = round(($bytesInMb / 1000)) . ' GB';
+        } else {
+            $result = round($bytesInMb) . ' MB';
+        }
+
+        return $result;
     }
 }

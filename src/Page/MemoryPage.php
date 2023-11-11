@@ -4,14 +4,23 @@ namespace Startwind\Top\Page;
 
 use Startwind\Top\Application\MainFrame;
 use Startwind\Top\Client\Server;
+use Startwind\Top\Page\Exception\NoDataReturnedException;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class MemoryPage extends Page
 {
-    public function render(OutputInterface $output, MainFrame $mainFrame, Server $server, int $currentPage, int $intervalInMinutes): void
+    public function render(OutputInterface $output, MainFrame $mainFrame, Server $server, int $intervalInMinutes): void
     {
         $mainFrame->render();
+
+        var_dump($intervalInMinutes);
+        // var_dump($server);
+
         $data = $this->getData($server, Server::METRIC_MEMORY, $intervalInMinutes);
+
+        if (!$data) {
+            throw new NoDataReturnedException('Unable to fetch data for Memory metric.');
+        }
 
         $memData = $data['data']['average'];
 
