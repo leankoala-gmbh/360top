@@ -33,14 +33,9 @@ class Server
         return $result['metrics'];
     }
 
-    public function getMetric(string $metric, int $start, ?int $end = null): array
+    public function getMetric(string $metric, int $durationInMinutes): array
     {
-        $payload = ['serverId' => $this->serverId, 'start' => $start, 'metric' => $metric];
-
-        if ($end) {
-            $payload['end'] = $end;
-        }
-
+        $payload = ['serverId' => $this->serverId, 'durationInMinutes' => $durationInMinutes, 'metric' => $metric];
         return $this->client->fetch(self::ENDPOINT_METRIC, $payload);
     }
 

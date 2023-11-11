@@ -15,8 +15,7 @@ abstract class Page
 
     protected function getData(Server $server, $metric = Server::METRIC_MEMORY, int $durationInMinutes = 30): array
     {
-        $start = time() - $durationInMinutes * 60;
-        return $server->getMetric($metric, $start);
+        return $server->getMetric($metric, $durationInMinutes);
     }
 
     private function getLabelType($duration): string

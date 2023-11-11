@@ -16,8 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class RunCommand extends TopCommand
 {
-    private int $currentPage = 0;
-
     private int $currentIntervalInMinutes = 30;
 
     private array $menu = [];
@@ -174,9 +172,6 @@ class RunCommand extends TopCommand
             if (!$mainFrame->isDropDownOpen()) {
                 foreach ($this->menu as $menu) {
                     if (strtolower($menu['shortcut']) === strtolower($commandCharacter)) {
-                        if ($lastChar != $commandCharacter) {
-                            $this->currentPage = 0;
-                        }
                         $lastChar = $commandCharacter;
                         if (array_key_exists('metric', $menu)) {
                             $menu['page']->render($output, $mainFrame, $this->server, $menu['metric'], $this->getBestInterval());

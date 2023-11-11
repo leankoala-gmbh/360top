@@ -32,6 +32,8 @@ sudo mv 360top.phar /usr/local/bin/360top
   - `init` now works with command line options and can be used in scripts  
   - The interval for the data can be chosen (30min, 1h, 1d and 1m)
   - Added correct label to graph
+  - API requests are cached for 60 seconds
+  - Fix: Pagination works with only one page
 
 
 - **Version 1.0**

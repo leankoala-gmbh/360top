@@ -4,8 +4,13 @@ namespace Startwind\Top\Client;
 
 class Client
 {
+    const CACHE_TIME_IN_SECONDS = 60;
+
     private \GuzzleHttp\Client $client;
     private string $apiToken;
+
+
+    private array $cache = [];
 
     public function __construct(string $apiToken, \GuzzleHttp\Client $client)
     {
@@ -20,6 +25,13 @@ class Client
 
     public function fetch(string $url, array $payload = [], string $method = "GET"): array
     {
+        if (array_key_exists('durationInMinutes', $payload)) {
+            $payload['start'] = time() - $payload['durationInMinutes'] * 60;
+        }
+
+        $baseUrl = $url;
+        $basePayload = $payload;
+
         foreach ($payload as $key => $value) {
             $url = str_replace('{' . $key . '}', $value, $url);
         }
@@ -34,13 +46,28 @@ class Client
                     $url .= '&' . $key . '=' . $value;
                 }
             }
-            //  var_dump($url);
+
+            unset($basePayload['start']);
+            unset($basePayload['end']);
+
+            $hash = md5($baseUrl . json_encode($basePayload));
+
+            if (array_key_exists($hash, $this->cache)) {
+                if ($this->cache[$hash]['time'] + self::CACHE_TIME_IN_SECONDS > time()) {
+                    return $this->cache[$hash]['data'];
+                }
+            }
 
             $response = $this->client->get($url, ['headers' => ['Authorization' => "Bearer " . $this->apiToken]]);
         } else {
             throw  new \RuntimeException('Method not implemented yet.');
         }
 
-        return json_decode((string)$response->getBody(), true);
+        $data = json_decode((string)$response->getBody(), true);
+
+        $this->cache[$hash]['time'] = time();
+        $this->cache[$hash]['data'] = $data;
+
+        return $data;
     }
 }
