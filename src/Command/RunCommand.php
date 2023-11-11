@@ -50,7 +50,7 @@ class RunCommand extends TopCommand
         $this->server = $client->getServer($config['serverId']);
 
         $mainFrame = new MainFrame($output);
-        
+
         $this->initMenu();
         $this->initIntervalMenu();
 
@@ -95,7 +95,7 @@ class RunCommand extends TopCommand
 
         $metricTypes = $this->server->getMetricTypes();
 
-        $knownMetrics = ['cpu', 'mem', 'df', 'pn', 'net', 'uptime', 'la', 'io', 'load_per_core', 'swp'];
+        $knownMetrics = ['cpu', 'mem', 'df', 'pn', 'net', 'process', 'uptime', 'la', 'io', 'load_per_core', 'swp'];
         // $knownMetrics = ['cpu'];
 
         $count = 0;
