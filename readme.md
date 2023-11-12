@@ -63,6 +63,7 @@ The CLI script can update itself by running the following command.
 
 - **Version 1.2**
   - Auto refresh the graphs after 60 seconds
+  - Clear screen on exit
 
 
 - **Version 1.1**
@@ -95,4 +96,3 @@ The CLI script can update itself by running the following command.
 - Live data using 360 agent
 - Error handling for API errors
 - Modal component
-- Auto-refresh after 60 seconds
