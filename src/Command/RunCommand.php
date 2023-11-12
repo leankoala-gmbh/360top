@@ -224,10 +224,15 @@ class RunCommand extends TopCommand
                     if ($lastChar != $commandCharacter) {
                         $mainFrame->setPage(0, 0);
                     }
-                    if (array_key_exists('metric', $menu)) {
-                        $menu['page']->render($output, $mainFrame, $this->server, $menu['metric'], $this->getBestInterval());
-                    } else {
-                        $menu['page']->render($output, $mainFrame, $this->server, $this->getBestInterval());
+                    try {
+                        if (array_key_exists('metric', $menu)) {
+                            $menu['page']->render($output, $mainFrame, $this->server, $menu['metric'], $this->getBestInterval());
+                        } else {
+                            $menu['page']->render($output, $mainFrame, $this->server, $this->getBestInterval());
+                        }
+                    } catch (\Exception $exception) {
+                        $this->errorBox($output, $exception->getMessage());
+                        die;
                     }
 
                     $this->lastRefresh = time();

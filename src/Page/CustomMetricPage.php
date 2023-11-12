@@ -4,6 +4,7 @@ namespace Startwind\Top\Page;
 
 use Startwind\Top\Application\MainFrame;
 use Startwind\Top\Client\Server;
+use Startwind\Top\Page\Exception\NoDataReturnedException;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class CustomMetricPage extends Page
@@ -15,6 +16,10 @@ class CustomMetricPage extends Page
         $data = $this->getData($server, $metric, $intervalInMinutes);
 
         $metrics = $data['data']['average'];
+
+        if (is_null($metrics)) {
+            $metrics = [];
+        }
 
         $pageOption = $this->getPageOptions($mainFrame, $metrics);
 
