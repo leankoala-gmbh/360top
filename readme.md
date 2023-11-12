@@ -53,7 +53,7 @@ To run the 360top command line tool simply run
 
 The CLI script can update itself by running the following command. 
 
-> Is this tool is pretty new we recommend to update 
+> As this tool is pretty new we recommend to update more often at the moment.
 
 ```shell
 360top update
