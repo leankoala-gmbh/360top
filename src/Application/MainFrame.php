@@ -28,6 +28,8 @@ class MainFrame
 
     private bool $dropDownIsOpen = false;
 
+    private Box $box;
+
     public function __construct(OutputInterface $output)
     {
         $this->output = $output;
@@ -37,21 +39,13 @@ class MainFrame
 
         $this->height = $terminal->getHeight();
         $this->width = $terminal->getWidth();
+
+        $this->box = new Box($output);
     }
 
     public function render(): void
     {
-        $this->cursor->moveToPosition(0, 0);
-        $this->output->writeln('┏' . str_repeat('━', $this->width - 2) . '┓');
-
-        for ($i = 1; $i < $this->height - 1; $i++) {
-            $this->cursor->moveToPosition(0, $i);
-            $this->output->writeln('┃' . str_repeat(' ', $this->width - 2) . '┃');
-        }
-
-        $this->cursor->moveToPosition(1, $this->height);
-        $version = '  Version ' . TOP_VERSION . '  ';
-        $this->output->writeln('┗' . str_repeat('━', $this->width - 4 - strlen($version)) . $version . '━━┛');
+        $this->box->render(0,0, $this->width, $this->height, 'Version ' . TOP_VERSION);
 
         $this->cursor->moveToPosition(1, 1);
         $this->output->writeln('┣' . str_repeat('━', $this->width - 2) . '┫');
