@@ -39,7 +39,7 @@ abstract class Page
 
         $cursor = new Cursor($output);
 
-        $cursor->moveToPosition($positionX, $positionY - $height);
+        $cursor->moveToPosition($positionX, $positionY - $height + 1);
 
         $output->write('<comment>' . $headline . '</comment>');
 
@@ -50,7 +50,7 @@ abstract class Page
         $steps = $preparedDataArray['steps'];
 
         foreach ($steps as $i => $label) {
-            $cursor->moveToPosition($positionX, $positionY - $i + 2);
+            $cursor->moveToPosition($positionX, $positionY - $i + 3);
             $output->write($label);
             $labelMaxLength = max($labelMaxLength, strlen($label));
         }
@@ -60,7 +60,7 @@ abstract class Page
         foreach ($preparedDataArray['data'] as $timestamp => $value) {
 
             for ($i = 0; $i < $height; $i++) {
-                $cursor->moveToPosition($x + $positionX + $labelMaxLength + 3, $positionY - $height + $i + 2);
+                $cursor->moveToPosition($x + $positionX + $labelMaxLength + 3, $positionY - $height + $i + 3);
                 if ($value >= $height - $i) {
                     $output->write('██');
                 }
@@ -80,7 +80,7 @@ abstract class Page
                     $hour = '??';
             }
 
-            $cursor->moveToPosition($x + $positionX + $labelMaxLength + 3, $positionY + 3);
+            $cursor->moveToPosition($x + $positionX + $labelMaxLength + 3, $positionY + 4);
             $output->write($hour);
 
             $x += 3;
@@ -153,14 +153,14 @@ abstract class Page
     {
         $cursor = new Cursor($output);
 
-        $cursor->moveToPosition(3, 5);
+        $cursor->moveToPosition(3, 6);
 
         foreach ($header as $value) {
             $output->write($value . '      ');
         }
 
         foreach ($array as $index => $values) {
-            $cursor->moveToPosition(3, 7 + $index);
+            $cursor->moveToPosition(3, 8 + $index);
             if ($values['status'] === 'open') {
                 $start = '<error>';
                 $end = '</error>';

@@ -125,19 +125,19 @@ class MainFrame
     {
         $offset = $this->getDropDownMenuWidth();
 
-        $this->cursor->moveToPosition($offset, 1);
+        $this->cursor->moveToPosition($offset, 2);
         $this->output->write('┳');
 
-        $this->cursor->moveToPosition($offset, 3);
+        $this->cursor->moveToPosition($offset, 4);
         $this->output->write('┻');
 
-        $this->cursor->moveToPosition(3, 2);
+        $this->cursor->moveToPosition(3, 3);
 
         if ($this->dropDownIsOpen) {
             $this->output->write(str_pad($this->dropDownMenu[$this->dropDownIndex]['caption'], $offset - 8, ' ') . '  ▲  ┃');
 
             foreach ($this->dropDownMenu as $index => $downMenu) {
-                $this->cursor->moveToPosition(3, 3 + ($index + 1) * 2);
+                $this->cursor->moveToPosition(3, 4 + ($index + 1) * 2);
 
                 if ($index == $this->dropDownIndex) {
                     $checkedBegin = '<info>';
@@ -148,16 +148,16 @@ class MainFrame
                 }
 
                 $this->output->write($checkedBegin . str_pad($this->dropDownMenu[$index]['caption'], $offset - 3, ' ') . $checkedEnd . '┃');
-                $this->cursor->moveToPosition(3, 2 + ($index + 1) * 2);
+                $this->cursor->moveToPosition(3, 3 + ($index + 1) * 2);
                 $this->output->write(str_pad('', $offset - 3, ' ') . '┃');
             }
 
-            $this->cursor->moveToPosition($offset, 3);
+            $this->cursor->moveToPosition($offset, 4);
             $this->output->write('╋');
 
-            $this->cursor->moveToPosition(0, 4 + (count($this->dropDownMenu) * 2));
-            $this->output->write('┃' . str_pad('', $offset - 2, ' ') . '┃');
             $this->cursor->moveToPosition(0, 5 + (count($this->dropDownMenu) * 2));
+            $this->output->write('┃' . str_pad('', $offset - 2, ' ') . '┃');
+            $this->cursor->moveToPosition(0, 6 + (count($this->dropDownMenu) * 2));
             $this->output->write('┗' . str_repeat('━', $offset - 2,) . '┛');
         } else {
             $this->output->write(str_pad($this->dropDownMenu[$this->dropDownIndex]['caption'], $offset - 8, ' ') . '  ▼  ┃');
@@ -247,7 +247,7 @@ class MainFrame
     {
         if ($this->pageCount != 0) {
             $label = '← ' . ($this->currentPage + 1) . ' / ' . $this->pageCount . ' →';
-            $this->cursor->moveToPosition($this->width - strlen($label) + 2, 2);
+            $this->cursor->moveToPosition($this->width - strlen($label) + 2, 3);
             $this->output->write($label);
         }
     }
