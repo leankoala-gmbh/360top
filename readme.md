@@ -61,6 +61,10 @@ The CLI script can update itself by running the following command.
 
 ## Change Log
 
+- **Version 1.2**
+  - Auto refresh the graphs after 60 seconds
+
+
 - **Version 1.1**
   - `init` now works with command line options and can be used in scripts  
   - The interval for the data can be chosen (30min, 1h, 1d and 1m)
