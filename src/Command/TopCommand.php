@@ -27,4 +27,16 @@ abstract class TopCommand extends Command
         $home = getenv("HOME");
         return $home . DIRECTORY_SEPARATOR . self::INIT_FILE;
     }
+
+    protected function errorBox(OutputInterface $output, $message): void
+    {
+        $spaces = str_repeat(' ', strlen($message) + 4);
+
+        $output->writeln([
+                '<error>' . $spaces,
+                '  ' . $message . '  ',
+                $spaces . '</error>'
+            ]
+        );
+    }
 }

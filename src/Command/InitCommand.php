@@ -21,7 +21,6 @@ class InitCommand extends TopCommand
         $this->addOption('serverId', 's', InputOption::VALUE_OPTIONAL, 'The 360 Monitoring serverId.');
 
         $this->addOption('fromAgentConfig', null, InputOption::VALUE_NONE, 'Take server ID from 360 agent config.');
-        // $this->addOption('serverId', 's', )
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -80,22 +79,12 @@ class InitCommand extends TopCommand
     private function validate(OutputInterface $output, string $serverId, string $apiToken): bool
     {
         if (strlen($serverId) !== 24) {
-            $output->writeln([
-                '',
-                '<error>                                                   ',
-                '  The server ID must be exact 24 characters long.  ',
-                '                                                   </error>',
-            ]);
+            $this->errorBox($output, 'The server ID must be exact 24 characters long.');
             return false;
         }
 
         if (strlen($apiToken) !== 64) {
-            $output->writeln([
-                '',
-                '<error>                                                   ',
-                '  The API token must be exact 64 characters long.  ',
-                '                                                   </error>',
-            ]);
+            $this->errorBox($output, 'The API token must be exact 64 characters long.');
             return false;
         }
 

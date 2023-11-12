@@ -49,6 +49,16 @@ To run the 360top command line tool simply run
 360top
 ```
 
+## Update
+
+The CLI script can update itself by running the following command. 
+
+> Is this tool is pretty new we recommend to update 
+
+```shell
+360top update
+```
+
 ## Change Log
 
 - **Version 1.1**
@@ -81,4 +91,4 @@ To run the 360top command line tool simply run
 - Live data using 360 agent
 - Error handling for API errors
 - Modal component
-
+- Auto-refresh after 60 seconds
