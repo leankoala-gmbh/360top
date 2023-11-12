@@ -16,6 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class RunCommand extends TopCommand
 {
+    private string $sttyMode;
+
     private int $currentIntervalInMinutes = 30;
 
     private int $refreshIntervalInSeconds = 60;
@@ -39,6 +41,8 @@ class RunCommand extends TopCommand
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         pcntl_signal(SIGINT, [$this, "exitTool"]);
+
+        $this->sttyMode = shell_exec('stty -g');
 
         if (!file_exists($this->getConfigFile())) {
             $this->errorBox($output, 'No configuration file found. Please run "360top init" before.');
@@ -169,6 +173,8 @@ class RunCommand extends TopCommand
     {
         stream_set_blocking(STDIN, true);
         $this->mainFrame->clear();
+
+        shell_exec('stty '.$this->sttyMode);
 
         die();
     }
