@@ -40,7 +40,7 @@ class Box
 
         if ($boxLabel) {
             $label = '  ' . $boxLabel . '  ';
-            $this->output->writeln(self::LOWER_LEFT . str_repeat(self::HORIZONTAL, $width - 4 - strlen($label)) . $label . '━━' . self::LOWER_RIGHT);
+            $this->output->write(self::LOWER_LEFT . str_repeat(self::HORIZONTAL, $width - 4 - strlen($label)) . $label . '━━' . self::LOWER_RIGHT);
         } else {
             $this->output->write(self::LOWER_LEFT . str_repeat(self::HORIZONTAL, $width - 2) . self::LOWER_RIGHT);
         }

@@ -47,10 +47,10 @@ class MainFrame
     {
         $this->box->render(0,0, $this->width, $this->height, 'Version ' . TOP_VERSION);
 
-        $this->cursor->moveToPosition(1, 1);
+        $this->cursor->moveToPosition(1, 2);
         $this->output->write('┣' . str_repeat('━', $this->width - 2) . '┫');
 
-        $this->cursor->moveToPosition(1, 3);
+        $this->cursor->moveToPosition(1, 4);
         $this->output->write('┣' . str_repeat('━', $this->width - 2) . '┫');
 
         $this->renderHeadline();
@@ -71,7 +71,7 @@ class MainFrame
     {
         $offset = $this->getDropDownMenuWidth();
 
-        $this->cursor->moveToPosition($offset + 4, 2);
+        $this->cursor->moveToPosition($offset + 4, 3);
 
         foreach ($this->menu as $menu) {
             $this->output->write($menu['label'] . '     ');
@@ -86,7 +86,7 @@ class MainFrame
 
     private function renderHeadline(): void
     {
-        $this->cursor->moveToPosition(3, 0);
+        $this->cursor->moveToPosition(3, 1);
         $this->output->write('<info>' . $this->headline . '</info>');
     }
 
@@ -99,7 +99,7 @@ class MainFrame
     private function renderInfo(): void
     {
         $info = str_pad($this->info, 20, ' ', STR_PAD_LEFT);
-        $this->cursor->moveToPosition($this->width - strlen($info) - 2, 0);
+        $this->cursor->moveToPosition($this->width - strlen($info) - 2, 1);
         $this->output->write($info);
     }
 
@@ -216,7 +216,7 @@ class MainFrame
 
     private function renderFooter(): void
     {
-        $this->cursor->moveToPosition(4, $this->height - 2);
+        $this->cursor->moveToPosition(4, $this->height - 1);
         $this->output->write(' ' . $this->footer . ' ');
     }
 
