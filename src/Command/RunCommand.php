@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class RunCommand extends TopCommand
 {
-    private string $sttyMode;
+    private string $sttyMode = '';
 
     private int $currentIntervalInMinutes = 30;
 
@@ -42,12 +42,12 @@ class RunCommand extends TopCommand
     {
         pcntl_signal(SIGINT, [$this, "exitTool"]);
 
-        $this->sttyMode = shell_exec('stty -g');
-
         if (!file_exists($this->getConfigFile())) {
             $this->errorBox($output, 'No configuration file found. Please run "360top init" before.');
             return Command::FAILURE;
         }
+
+        $this->initCommandLine();
 
         $config = json_decode(file_get_contents($this->getConfigFile()), true);
 
@@ -76,6 +76,14 @@ class RunCommand extends TopCommand
         $this->doRun($output);
 
         return Command::SUCCESS;
+    }
+
+    private function initCommandLine(): void
+    {
+        $this->sttyMode = shell_exec('stty -g');
+
+        system('stty cbreak');
+        system('stty -echo');
     }
 
     private function initMenu(): void
@@ -139,9 +147,6 @@ class RunCommand extends TopCommand
 
     private function doRun(OutputInterface $output): void
     {
-        system('stty cbreak');
-        system('stty -echo');
-
         $lastChar = $this->menu[0]['shortcut'];
 
         while (true) {
@@ -174,7 +179,9 @@ class RunCommand extends TopCommand
         stream_set_blocking(STDIN, true);
         $this->mainFrame->clear();
 
-        shell_exec('stty '.$this->sttyMode);
+        if ($this->sttyMode) {
+            shell_exec('stty ' . $this->sttyMode);
+        }
 
         die();
     }
