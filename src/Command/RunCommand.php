@@ -11,7 +11,6 @@ use Startwind\Top\Page\DiskSpacePage;
 use Startwind\Top\Page\MemoryPage;
 use Startwind\Top\Page\NotificationPage;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Cursor;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -39,6 +38,8 @@ class RunCommand extends TopCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        pcntl_signal(SIGINT, [$this, "exitTool"]);
+
         if (!file_exists($this->getConfigFile())) {
             $this->errorBox($output, 'No configuration file found. Please run "360top init" before.');
             return Command::FAILURE;
@@ -154,13 +155,18 @@ class RunCommand extends TopCommand
             stream_set_blocking(STDIN, true);
 
             if (strtolower($commandCharacter) === 'q') {
-                stream_set_blocking(STDIN, true);
-                $this->mainFrame->clear();
-                die();
+                $this->exitTool();
             }
 
             $lastChar = $this->handleKeyPress($output, $commandCharacter, $lastChar);
         }
+    }
+
+    private function exitTool(): void
+    {
+        stream_set_blocking(STDIN, true);
+        $this->mainFrame->clear();
+        die();
     }
 
     private function handleRefresh(): bool
