@@ -70,3 +70,11 @@ To run the 360top command line tool simply run
   - Version handling
   - Fix: PHPStan
   - Fix: Open notifications do not have an end date
+
+## Ideas
+
+- Show current incidents on corresponding metric page
+- Live data using 360 agent
+- Error handling for API errors
+- Modal component
+
