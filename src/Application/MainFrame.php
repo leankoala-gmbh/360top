@@ -46,7 +46,7 @@ class MainFrame
 
     public function render(): void
     {
-        $this->box->render(0,0, $this->width, $this->height, 'Version ' . TOP_VERSION);
+        $this->box->render(0, 0, $this->width, $this->height, 'Version ' . TOP_VERSION);
 
         $this->cursor->moveToPosition(1, 2);
         $this->output->write('┣' . str_repeat('━', $this->width - 2) . '┫');
@@ -60,6 +60,13 @@ class MainFrame
         $this->renderFooter();
 
         $this->renderMenu();
+    }
+
+    public function clear(): void
+    {
+        $this->cursor->moveToPosition(0,0);
+        $this->output->writeln(str_repeat(' ', $this->width));
+        $this->output->writeln(str_repeat(' ', $this->width));
     }
 
     public function setMenu(array $menu): void
