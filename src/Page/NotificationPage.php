@@ -12,8 +12,6 @@ class NotificationPage extends Page
     {
         $data = $server->getNotifications();
 
-        $mainFrame->render();
-
         if (array_key_exists('data', $data)) {
             $notifications = $data['data'];
         } else {

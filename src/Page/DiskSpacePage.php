@@ -14,8 +14,6 @@ class DiskSpacePage extends Page
 
     public function render(OutputInterface $output, MainFrame $mainFrame, Server $server, int $intervalInMinutes): void
     {
-        $mainFrame->render();
-
         $data = $this->getData($server, Server::METRIC_DISK, $intervalInMinutes);
 
         $mounts = $data['data']['disk'];

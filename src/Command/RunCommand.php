@@ -63,7 +63,10 @@ class RunCommand extends TopCommand
 
         $this->mainFrame = $mainFrame;
 
-        (new MemoryPage())->render($output, $mainFrame, $this->server, $this->getBestInterval());
+        $this->mainFrame->render();
+
+        $this->menu[0]['page']->render($output, $mainFrame, $this->server, $this->getBestInterval());
+
         $this->lastRefresh = time();
 
         $this->doRun($output);
@@ -225,6 +228,7 @@ class RunCommand extends TopCommand
                         $mainFrame->setPage(0, 0);
                     }
                     try {
+                        $this->mainFrame->render();
                         if (array_key_exists('metric', $menu)) {
                             $menu['page']->render($output, $mainFrame, $this->server, $menu['metric'], $this->getBestInterval());
                         } else {

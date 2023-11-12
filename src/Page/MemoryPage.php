@@ -11,12 +11,10 @@ class MemoryPage extends Page
 {
     public function render(OutputInterface $output, MainFrame $mainFrame, Server $server, int $intervalInMinutes): void
     {
-        $mainFrame->render();
-
         $data = $this->getData($server, Server::METRIC_MEMORY, $intervalInMinutes);
 
         if (!$data) {
-            throw new NoDataReturnedException('Unable to fetch data for Memory metric.');
+            throw new NoDataReturnedException('Unable to fetch data for memory metric.');
         }
 
         $memData = $data['data']['average'];

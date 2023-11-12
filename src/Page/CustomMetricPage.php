@@ -10,8 +10,6 @@ class CustomMetricPage extends Page
 {
     public function render(OutputInterface $output, MainFrame $mainFrame, Server $server, string $metric, int $intervalInMinutes): void
     {
-        $mainFrame->render();
-
         $data = $this->getData($server, $metric, $intervalInMinutes);
 
         $metrics = $data['data']['average'];
