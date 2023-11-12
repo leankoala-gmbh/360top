@@ -48,10 +48,10 @@ class MainFrame
         $this->box->render(0,0, $this->width, $this->height, 'Version ' . TOP_VERSION);
 
         $this->cursor->moveToPosition(1, 1);
-        $this->output->writeln('┣' . str_repeat('━', $this->width - 2) . '┫');
+        $this->output->write('┣' . str_repeat('━', $this->width - 2) . '┫');
 
         $this->cursor->moveToPosition(1, 3);
-        $this->output->writeln('┣' . str_repeat('━', $this->width - 2) . '┫');
+        $this->output->write('┣' . str_repeat('━', $this->width - 2) . '┫');
 
         $this->renderHeadline();
         $this->renderDropDownMenu();
