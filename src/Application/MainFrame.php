@@ -29,6 +29,7 @@ class MainFrame
     private bool $dropDownIsOpen = false;
 
     private Box $box;
+    private string $refresh;
 
     public function __construct(OutputInterface $output)
     {
@@ -94,6 +95,19 @@ class MainFrame
     {
         $this->info = $info;
         $this->renderInfo();
+    }
+
+    public function setRefresh(string $refresh): void
+    {
+        $this->refresh = $refresh;
+        $this->renderRefresh();
+    }
+
+    private function renderRefresh(): void
+    {
+        $info = str_pad($this->refresh, 20, ' ', STR_PAD_LEFT);
+        $this->cursor->moveToPosition($this->width - strlen($info) - 2, 3);
+        $this->output->write($info);
     }
 
     private function renderInfo(): void

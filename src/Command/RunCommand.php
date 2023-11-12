@@ -18,6 +18,8 @@ class RunCommand extends TopCommand
 {
     private int $currentIntervalInMinutes = 30;
 
+    private int $refreshIntervalInSeconds = 60;
+
     private array $menu = [];
 
     private array $intervalMenu = [];
@@ -25,6 +27,8 @@ class RunCommand extends TopCommand
     private Server $server;
 
     private MainFrame $mainFrame;
+
+    private int $lastRefresh;
 
     protected function configure()
     {
@@ -58,6 +62,7 @@ class RunCommand extends TopCommand
         $this->mainFrame = $mainFrame;
 
         (new MemoryPage())->render($output, $mainFrame, $this->server, $this->getBestInterval());
+        $this->lastRefresh = time();
 
         $this->doRun($output);
 
@@ -125,68 +130,103 @@ class RunCommand extends TopCommand
 
     private function doRun(OutputInterface $output): void
     {
-        $mainFrame = $this->mainFrame;
-
         system('stty cbreak');
         system('stty -echo');
-
-        // stream_set_blocking(STDIN, false);
 
         $lastChar = $this->menu[0]['shortcut'];
 
         while (true) {
+            stream_set_blocking(STDIN, false);
+
             $commandCharacter = fread(STDIN, 16);
+
+            if ($commandCharacter == "") {
+                usleep(100000);
+                $doRefresh = $this->handleRefresh();
+                if (!$doRefresh) {
+                    continue;
+                } else {
+                    $commandCharacter = $lastChar;
+                }
+            }
+
+            stream_set_blocking(STDIN, true);
 
             if (strtolower($commandCharacter) === 'q') {
                 die();
             }
 
-            $arrowKey = preg_replace('/[^[:print:]\n]/u', '', mb_convert_encoding($commandCharacter, 'UTF-8', 'UTF-8'));
+            $lastChar = $this->handleKeyPress($output, $commandCharacter, $lastChar);
+        }
+    }
 
-            if ($arrowKey === "[C") {
-                $mainFrame->incCurrentPage();
-                $commandCharacter = $lastChar;
-            } else if ($arrowKey === "[D") {
-                $mainFrame->decCurrentPage();
-                $commandCharacter = $lastChar;
-            } else if ($arrowKey === "[B") {
-                if ($mainFrame->isDropDownOpen()) {
-                    $mainFrame->incDropDownIndex();
-                } else {
-                    $mainFrame->openDropDown();
-                }
-            } else if ($arrowKey === "[A") {
-                if ($mainFrame->isDropDownOpen()) {
-                    $mainFrame->decDropDownIndex();
-                } else {
-                    $mainFrame->openDropDown();
-                }
-            } else if (ord($arrowKey) === 10) {
-                $mainFrame->closeDropDown();
-                $index = $mainFrame->getDropDownIndex();
-                $this->currentIntervalInMinutes = $this->intervalMenu[$index]['value'];
-                $commandCharacter = $lastChar;
-            } else if (ord($arrowKey) === 0) {
-                $mainFrame->closeDropDown();
-                $mainFrame->setDropDownByInterval($this->currentIntervalInMinutes);
-                $commandCharacter = $lastChar;
+    private function handleRefresh(): bool
+    {
+        $refresh = $this->refreshIntervalInSeconds - (time() - $this->lastRefresh) % $this->refreshIntervalInSeconds;
+        $this->mainFrame->setRefresh('Next refresh in ' . ($refresh - 1) . 's');
+
+        if ($refresh === 1) {
+            $this->lastRefresh = time();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private function handleKeyPress(OutputInterface $output, $commandCharacter, $lastChar)
+    {
+        $mainFrame = $this->mainFrame;
+
+        $arrowKey = preg_replace('/[^[:print:]\n]/u', '', mb_convert_encoding($commandCharacter, 'UTF-8', 'UTF-8'));
+
+        if ($arrowKey === "[C") {
+            $mainFrame->incCurrentPage();
+            $commandCharacter = $lastChar;
+        } else if ($arrowKey === "[D") {
+            $mainFrame->decCurrentPage();
+            $commandCharacter = $lastChar;
+        } else if ($arrowKey === "[B") {
+            if ($mainFrame->isDropDownOpen()) {
+                $mainFrame->incDropDownIndex();
+            } else {
+                $mainFrame->openDropDown();
             }
+        } else if ($arrowKey === "[A") {
+            if ($mainFrame->isDropDownOpen()) {
+                $mainFrame->decDropDownIndex();
+            } else {
+                $mainFrame->openDropDown();
+            }
+        } else if (ord($arrowKey) === 10) {
+            $mainFrame->closeDropDown();
+            $index = $mainFrame->getDropDownIndex();
+            $this->currentIntervalInMinutes = $this->intervalMenu[$index]['value'];
+            $commandCharacter = $lastChar;
+        } else if (ord($arrowKey) === 0) {
+            $mainFrame->closeDropDown();
+            $mainFrame->setDropDownByInterval($this->currentIntervalInMinutes);
+            $commandCharacter = $lastChar;
+        }
 
-            if (!$mainFrame->isDropDownOpen()) {
-                foreach ($this->menu as $menu) {
-                    if (strtolower($menu['shortcut']) === strtolower($commandCharacter)) {
-                        if ($lastChar != $commandCharacter) {
-                            $mainFrame->setPage(0, 0);
-                        }
-                        $lastChar = $commandCharacter;
-                        if (array_key_exists('metric', $menu)) {
-                            $menu['page']->render($output, $mainFrame, $this->server, $menu['metric'], $this->getBestInterval());
-                        } else {
-                            $menu['page']->render($output, $mainFrame, $this->server, $this->getBestInterval());
-                        }
+        if (!$mainFrame->isDropDownOpen()) {
+            foreach ($this->menu as $menu) {
+                if (strtolower($menu['shortcut']) === strtolower($commandCharacter)) {
+                    if ($lastChar != $commandCharacter) {
+                        $mainFrame->setPage(0, 0);
                     }
+                    if (array_key_exists('metric', $menu)) {
+                        $menu['page']->render($output, $mainFrame, $this->server, $menu['metric'], $this->getBestInterval());
+                    } else {
+                        $menu['page']->render($output, $mainFrame, $this->server, $this->getBestInterval());
+                    }
+
+                    $this->lastRefresh = time();
+
+                    return $commandCharacter;
                 }
             }
         }
+
+        return $lastChar;
     }
 }
