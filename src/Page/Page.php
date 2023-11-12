@@ -85,9 +85,6 @@ abstract class Page
 
             $x += 3;
         }
-
-        $output->writeln("");
-        $output->writeln("");
     }
 
     private function prepareData(array $data, $numberOfBars = 30, $unit = ""): array
@@ -161,7 +158,6 @@ abstract class Page
         foreach ($header as $value) {
             $output->write($value . '      ');
         }
-        $output->writeln(['', '']);
 
         foreach ($array as $index => $values) {
             $cursor->moveToPosition(3, 7 + $index);
@@ -181,7 +177,7 @@ abstract class Page
 
             $row .= $end;
 
-            $output->writeln($row);
+            $output->write($row);
         }
     }
 
