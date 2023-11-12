@@ -8,6 +8,7 @@ use Startwind\Top\Client\Server;
 use Startwind\Top\Page\CpuPage;
 use Startwind\Top\Page\CustomMetricPage;
 use Startwind\Top\Page\DiskSpacePage;
+use Startwind\Top\Page\LoadAveragePage;
 use Startwind\Top\Page\MemoryPage;
 use Startwind\Top\Page\NotificationPage;
 use Symfony\Component\Console\Command\Command;
@@ -100,10 +101,16 @@ class RunCommand extends TopCommand
                 'page' => new CpuPage()
             ],
             [
+                'label' => "(L)oad Average",
+                'shortcut' => 'l',
+                'page' => new LoadAveragePage()
+            ],
+            [
                 'label' => "(D)isk Space",
                 'shortcut' => 'd',
                 'page' => new DiskSpacePage()
-            ], [
+            ],
+            [
                 'label' => "(N)otifications",
                 'shortcut' => 'n',
                 'page' => new NotificationPage()

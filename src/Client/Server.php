@@ -8,6 +8,7 @@ class Server
     const METRIC_MEMORY = 'mem';
     const METRIC_DISK_SPACE = 'df';
     const METRIC_DISK = 'disk';
+    const METRIC_LOAD_AVERAGE = 'la';
 
     const ENDPOINT_METRIC = 'https://api.monitoring360.io/v1/server/{serverId}/metrics';
     const ENDPOINT_NOTIFICATIONS = 'https://api.monitoring360.io/v1/server/{serverId}/notifications';
