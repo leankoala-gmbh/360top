@@ -26,6 +26,8 @@ directory (global install), using for example:
 sudo mv 360top.phar /usr/local/bin/360top
 ```
 
+## Initialization
+
 After the installation you just have to call the `init` command by running:
 
 ```shell
@@ -36,6 +38,8 @@ There you have to enter your server ID (if the 360 agent is installed the tool w
 
 - [Plesk Platform 360 API key URL](https://monitoring.platform360.io/api-keys/list)
 - [360 Monitoring API key URL](https://app.360monitoring.com/api-keys/list)
+
+If you want to automate the initialization you can use [our examples](/docs/install.md).
 
 ## Usage
 
