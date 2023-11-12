@@ -53,6 +53,7 @@ To run the 360top command line tool simply run
   - Added correct label to graph
   - API requests are cached for 60 seconds
   - Accept ESC to exit drop down menu
+  - Reduced artifacts on exit
   - Fix: Pagination works with only one page
 
 
