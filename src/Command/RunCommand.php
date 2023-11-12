@@ -166,6 +166,7 @@ class RunCommand extends TopCommand
     {
         stream_set_blocking(STDIN, true);
         $this->mainFrame->clear();
+
         die();
     }
 

@@ -67,6 +67,8 @@ class MainFrame
         $this->cursor->moveToPosition(0,0);
         $this->output->writeln(str_repeat(' ', $this->width));
         $this->output->writeln(str_repeat(' ', $this->width));
+
+        echo "\033c";
     }
 
     public function setMenu(array $menu): void
