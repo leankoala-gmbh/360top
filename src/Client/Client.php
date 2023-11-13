@@ -4,6 +4,8 @@ namespace Startwind\Top\Client;
 
 class Client
 {
+    const AGENT_NAME = '360top';
+
     const CACHE_TIME_IN_SECONDS = 60;
 
     private \GuzzleHttp\Client $client;
@@ -25,6 +27,8 @@ class Client
 
     public function fetch(string $url, array $payload = [], string $method = "GET"): array
     {
+        $payload['agent'] = self::AGENT_NAME;
+
         if (array_key_exists('durationInMinutes', $payload)) {
             $payload['start'] = time() - $payload['durationInMinutes'] * 60;
         }
