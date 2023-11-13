@@ -212,12 +212,16 @@ class RunCommand extends TopCommand
 
         $arrowKey = preg_replace('/[^[:print:]\n]/u', '', mb_convert_encoding($commandCharacter, 'UTF-8', 'UTF-8'));
 
+        $reloadByArrow = false;
+
         if ($arrowKey === "[C") {
             $mainFrame->incCurrentPage();
             $commandCharacter = $lastChar;
+            $reloadByArrow = true;
         } else if ($arrowKey === "[D") {
             $mainFrame->decCurrentPage();
             $commandCharacter = $lastChar;
+            $reloadByArrow = true;
         } else if ($arrowKey === "[B") {
             if ($mainFrame->isDropDownOpen()) {
                 $mainFrame->incDropDownIndex();
@@ -259,7 +263,9 @@ class RunCommand extends TopCommand
                         die;
                     }
 
-                    $this->lastRefresh = time();
+                    if (!$reloadByArrow) {
+                        $this->lastRefresh = time();
+                    }
 
                     return $commandCharacter;
                 }

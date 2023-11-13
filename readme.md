@@ -62,9 +62,9 @@ The CLI script can update itself by running the following command.
 ## Change Log
 
 - **Version 1.2**
+  - New metric: Load Average
   - Auto refresh the graphs after 60 seconds
   - Clear screen on exit
-  - New metric: Load Average
   - Fix: Reset STTY settings on exit
 
 
