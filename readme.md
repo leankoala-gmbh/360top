@@ -65,6 +65,7 @@ The CLI script can update itself by running the following command.
   - New metric: Load Average
   - Auto refresh the graphs after 60 seconds
   - Clear screen on exit
+  - Added user agent to cURL requests
   - Fix: Reset STTY settings on exit
   - Fix: Counter not refreshed when arrow pressed
 
