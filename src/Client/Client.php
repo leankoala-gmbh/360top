@@ -62,7 +62,7 @@ class Client
                 }
             }
 
-            $response = $this->client->get($url, ['headers' => ['Authorization' => "Bearer " . $this->apiToken]]);
+            $response = $this->client->get($url, ['headers' => ['User-Agent' => self::AGENT_NAME . ' v' . TOP_VERSION, 'Authorization' => "Bearer " . $this->apiToken]]);
         } else {
             throw  new \RuntimeException('Method not implemented yet.');
         }
