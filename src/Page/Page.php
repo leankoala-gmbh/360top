@@ -186,7 +186,7 @@ abstract class Page
     {
         $max = $mainFrame->getMaxNumberOfGraphs(self::METRIC_HEIGHT + 7);
 
-        $pageCount = (int)((count($timeSeries) / $max) + 1);
+        $pageCount = (ceil(count($timeSeries) / $max));
 
         $currentPage = min($pageCount - 1, $mainFrame->getCurrentPage());
 
@@ -209,6 +209,8 @@ abstract class Page
     protected function renderGraphs(OutputInterface $output, MainFrame $mainFrame, array $graphs): void
     {
         $pageOption = $this->getPageOptions($mainFrame, $graphs);
+
+        // var_dump($mainFrame->get);
 
         $count = 1;
         $position = 1;
