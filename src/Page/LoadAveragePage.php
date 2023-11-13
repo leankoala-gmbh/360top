@@ -2,6 +2,7 @@
 
 namespace Startwind\Top\Page;
 
+use Startwind\Top\Application\Graph;
 use Startwind\Top\Application\MainFrame;
 use Startwind\Top\Client\Server;
 use Startwind\Top\Page\Exception\NoDataReturnedException;
@@ -23,10 +24,10 @@ class LoadAveragePage extends Page
 
         $loadDate = $data['data']['average'];
 
-        $this->renderGraph($output, "Load average (1 minute)", 3, 15, $loadDate[self::INTERVAL_ONE_MINUTE], '', 30, $intervalInMinutes);
-        $this->renderGraph($output, "Load average (5 minutes)", 3, 30, $loadDate[self::INTERVAL_FIVE_MINUTES], '', 30, $intervalInMinutes);
-        $this->renderGraph($output, "Load average (15 minutes)", 3, 45, $loadDate[self::INTERVAL_FIFTEEN_MINUTE], '', 30, $intervalInMinutes);
+        $graphs[] = new Graph($loadDate[self::INTERVAL_ONE_MINUTE], "Load average (1 minute)", $intervalInMinutes);
+        $graphs[] = new Graph($loadDate[self::INTERVAL_FIVE_MINUTES], "Load average (5 minute)", $intervalInMinutes);
+        $graphs[] = new Graph($loadDate[self::INTERVAL_FIFTEEN_MINUTE], "Load average (15 minute)", $intervalInMinutes);
 
-        $mainFrame->setInfo('Memory history');
+        $this->renderGraphs($output, $mainFrame, $graphs);
     }
 }

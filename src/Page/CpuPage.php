@@ -2,6 +2,7 @@
 
 namespace Startwind\Top\Page;
 
+use Startwind\Top\Application\Graph;
 use Startwind\Top\Application\MainFrame;
 use Startwind\Top\Client\Server;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -14,8 +15,8 @@ class CpuPage extends Page
 
         $timeSeries = $data['data']['cpu']['average']['usage'];
 
-        $this->renderGraph($output, "CPU (average)", 3, 15, $timeSeries, self::UNIT_PERCENT, 30, $intervalInMinutes);
+        $graphs[] = new Graph($timeSeries, "CPU (average)", $intervalInMinutes, Graph::UNIT_PERCENT);
 
-        $mainFrame->setInfo('CPU history');
+        $this->renderGraphs($output, $mainFrame, $graphs);
     }
 }

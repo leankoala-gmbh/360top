@@ -44,7 +44,5 @@ class NotificationPage extends Page
         }
 
         $this->renderTable($output, ['Start time', 'End time', ' Duration', 'Metric', 'Message'], $tableData);
-
-        $mainFrame->setInfo('Incident history');
     }
 }

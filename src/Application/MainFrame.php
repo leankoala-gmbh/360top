@@ -64,7 +64,7 @@ class MainFrame
 
     public function clear(): void
     {
-        $this->cursor->moveToPosition(0,0);
+        $this->cursor->moveToPosition(0, 0);
         $this->output->writeln(str_repeat(' ', $this->width));
         $this->output->writeln(str_repeat(' ', $this->width));
 
@@ -115,12 +115,13 @@ class MainFrame
     private function renderRefresh(): void
     {
         $info = str_pad($this->refresh, 20, ' ', STR_PAD_LEFT);
-        $this->cursor->moveToPosition($this->width - strlen($info) - 2, 3);
+        $this->cursor->moveToPosition($this->width - strlen($info) - 2, 1);
         $this->output->write($info);
     }
 
     private function renderInfo(): void
     {
+        return;
         $info = str_pad($this->info, 20, ' ', STR_PAD_LEFT);
         $this->cursor->moveToPosition($this->width - strlen($info) - 2, 1);
         $this->output->write($info);
@@ -283,5 +284,12 @@ class MainFrame
     public function getWidth(): int
     {
         return $this->width;
+    }
+
+    public function renderGraphs(array $graphs): void
+    {
+        foreach ($graphs as $graph) {
+
+        }
     }
 }

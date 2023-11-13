@@ -66,6 +66,7 @@ The CLI script can update itself by running the following command.
   - Auto refresh the graphs after 60 seconds
   - Clear screen on exit
   - Fix: Reset STTY settings on exit
+  - Fix: Counter not refreshed when arrow pressed
 
 
 - **Version 1.1**

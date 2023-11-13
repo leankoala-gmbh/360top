@@ -2,6 +2,7 @@
 
 namespace Startwind\Top\Page;
 
+use Startwind\Top\Application\Graph;
 use Startwind\Top\Application\MainFrame;
 use Startwind\Top\Client\Server;
 use Symfony\Component\Console\Cursor;
@@ -200,5 +201,33 @@ abstract class Page
             'start' => $start,
             'end' => $end
         ];
+    }
+
+    /**
+     * @param Graph[] $graphs
+     */
+    protected function renderGraphs(OutputInterface $output, MainFrame $mainFrame, array $graphs): void
+    {
+        $pageOption = $this->getPageOptions($mainFrame, $graphs);
+
+        $count = 1;
+        $position = 1;
+
+        foreach ($graphs as $graph) {
+            if ($count <= $pageOption['end'] && $count > $pageOption['start']) {
+                $this->renderGraph(
+                    $output,
+                    $graph->getHeadline(),
+                    3,
+                    $position * (self::METRIC_HEIGHT + 5),
+                    $graph->getTimeSeries(),
+                    $graph->getUnit(),
+                    30,
+                    $graph->getIntervalInMinutes()
+                );
+                $position++;
+            }
+            $count++;
+        }
     }
 }

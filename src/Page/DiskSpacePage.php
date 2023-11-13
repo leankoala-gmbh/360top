@@ -2,6 +2,7 @@
 
 namespace Startwind\Top\Page;
 
+use Startwind\Top\Application\Graph;
 use Startwind\Top\Application\MainFrame;
 use Startwind\Top\Client\Server;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -18,24 +19,16 @@ class DiskSpacePage extends Page
 
         $mounts = $data['data']['disk'];
 
-        $pageOption = $this->getPageOptions($mainFrame, $mounts);
-
-        $count = 1;
-        $position = 1;
+        $graphs = [];
 
         foreach ($mounts as $mountName => $timeSeries) {
             $free = $this->byteToHumanReadable((int)end($timeSeries[self::FIELD_BYTES_FREE]));
             $used = $this->byteToHumanReadable((int)end($timeSeries[self::FIELD_BYTES_USED]));
 
-            if ($count <= $pageOption['end'] && $count > $pageOption['start']) {
-                $this->renderGraph($output, "Mount point \"" . $mountName . '" (used: ' . $used . ', free: ' . $free . ')', 3, (self::METRIC_HEIGHT + 5) * $position, $timeSeries[self::FIELD_PERCENTAGE_USED], self::UNIT_PERCENT, 30, $intervalInMinutes);
-                $position++;
-            }
-
-            $count++;
+            $graphs[] = new Graph($timeSeries[self::FIELD_PERCENTAGE_USED], "Mount point \"" . $mountName . '" (used: ' . $used . ', free: ' . $free . ')', $intervalInMinutes, self::UNIT_PERCENT);
         }
 
-        $mainFrame->setInfo('Disk space history');
+        $this->renderGraphs($output, $mainFrame, $graphs);
     }
 
     protected function byteToHumanReadable(int $bytes): string
