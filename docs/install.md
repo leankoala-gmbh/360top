@@ -22,7 +22,7 @@ from the agent configuration by adding the `--fromAgentConfig` option.
 
     - name: Init 360top
       shell: |
-        360top init --fromAgentConfig --token c394be60e6a4e526b7bdbb8de35507a9806a12e2259a8adc8edd9884f64403fa
+        360top init --fromAgentConfig --token c394be60e6a4e526b7bdbb8de35507a9806a12e2259a8adc8edd5554f64403fa
       args:
         executable: /bin/bash
 ```
